@@ -1,1 +1,1 @@
-﻿
+﻿document.write('welcome to my app');
