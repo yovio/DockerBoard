@@ -7,7 +7,7 @@ module.exports = function () {
             'main': './wwwroot/js/app.js'
         },
         output: {
-            path: path.join(__dirname, '/../dist/assets'),
+            path: path.join(__dirname, '/wwwroot/assets'),
             filename: '[name].bundle.js',            
             sourceMapFilename: '[name].map'
         },
