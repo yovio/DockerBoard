@@ -1,0 +1,4 @@
+src/.vs
+src/DockerBoard.Web/node_modules
+src/DockerBoard.Web/bin
+src/DockerBoard.Web/obj
