@@ -15,7 +15,7 @@ environment:
   access_token:
     secure: qRzC1wbGOm03rV/KC4GsPMxBVmSZMRzq7ORcsDYqHaaffyFVbDnPqkWNWmmM3CoO
 before_build:
-- ps: dotnet restore
+- ps: dotnet restore .\src
 build:
   project: src/DockerBoard.Web/DockerBoard.Web.csproj
   verbosity: normal
