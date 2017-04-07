@@ -9,6 +9,10 @@ module.exports = function () {
             filename: '[name].bundle.js',            
             sourceMapFilename: '[name].map'
         },
+        externals: {            
+            "react": "React",
+            "react-dom":"ReactDOM"
+        },
         resolve: {
             extensions: [".webpack.js", ".web.js", ".js", ".json", ".jsx"],
             modules: ["./wwwroot/js", "node_modules"]
