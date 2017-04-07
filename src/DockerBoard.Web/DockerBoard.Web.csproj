@@ -2,15 +2,32 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <PreBuildEvent></PreBuildEvent>
+    <PostBuildEvent></PostBuildEvent>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\js\app.js" />
+    <Content Include="wwwroot\index.html" />
+    <Content Include="wwwroot\js\app.jsx" />
+    <Content Include="wwwroot\js\hello-world.jsx" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
   </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0-msbuild3-final" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0-msbuild3-final" />
+  </ItemGroup>
+
+  <Target Name="NpmCommands" BeforeTargets="Build">
+    <Exec Command="ECHO Start NPM Commands" />
+    <Exec Command="npm install" />
+    <Exec Condition="$(Configuration) == 'Debug'" Command="npm run buildDev" />
+    <Exec Condition="$(Configuration) == 'Release'" Command="npm run buildProd" />
+  </Target>
 
 </Project>
