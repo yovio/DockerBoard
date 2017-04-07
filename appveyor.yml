@@ -1,0 +1,38 @@
+version: 1.0.{build}
+branches:
+  only:
+  - master
+image: Visual Studio 2017
+configuration: Release
+
+install:
+- cmd: echo %DNX_BUILD_VERSION%
+- ps: Install-Product node 7.8.0 x86
+
+environment:
+  git_email:
+    secure: FA66GTeKDJ3zUyCa7ymQ8cixpvhi5NyCCUNbWeMHLJY=
+  access_token:
+    secure: qRzC1wbGOm03rV/KC4GsPMxBVmSZMRzq7ORcsDYqHaaffyFVbDnPqkWNWmmM3CoO
+before_build:
+- ps: dotnet restore
+build:
+  project: src/DockerBoard.Web/DockerBoard.Web.csproj
+  verbosity: normal
+after_build:
+- ps: >-
+    $release = Join-Path $pwd release
+
+    dotnet publish .\src\DockerBoard.Web -c Release -o $release --version-suffix=$env:APPVEYOR_BUILD_VERSION
+deploy: off
+on_success:
+ - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+ - git config --global credential.helper store
+ - git config --global user.email "$($env:git_email)"
+ - git config --global user.name "Yovi Oktofianus"
+ - git config --global core.autocrlf true
+ - git checkout master
+ - git add .
+ - git commit -m "ci deploy"
+ - git status
+ - git push origin master:release -f
